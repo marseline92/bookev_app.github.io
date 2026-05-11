@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>БукОцінка - Сервіс оцінки книг</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; }
+        input, select, button { padding: 10px; width: 100%; }
+        button { background: #3b82f6; color: white; border: none; cursor: pointer; }
+        button:hover { background: #2563eb; }
+    </style>
+</head>
+<body>
+    <h1>📚 БукОцінка</h1>
+    <div class="form-group">
+        <label for="minPrice">Ціна нової книги (грн):</label>
+        <input type="number" id="minPrice" placeholder="Наприклад: 250" min="1">
+    </div>
+    <div class="form-group">
+        <label for="condition">Стан книги:</label>
+        <select id="condition">
+            <option value="ideal">Ідеальний стан</option>
+            <option value="flawed">Є потертості</option>
+            <option value="quick">Швидкий продаж</option>
+            <option value="rare">Дефіцитна</option>
+        </select>
+    </div>
+    <button onclick="calculatePrice()">Оцінити книгу</button>
+
+    <script>
+        const tg = window.Telegram.WebApp;
+        tg.expand();
+
+        function calculatePrice() {
+            const minPrice = parseFloat(document.getElementById('minPrice').value);
+            const condition = document.getElementById('condition').value;
+            if (isNaN(minPrice) || minPrice <= 0) {
+                alert("Введіть правильну ціну.");
+                return;
+            }
+
+            let calculatedPrice = 0;
+            switch (condition) {
+                case 'ideal': calculatedPrice = minPrice * 0.75; break;
+                case 'flawed': calculatedPrice = minPrice * 0.60; break;
+                case 'quick': calculatedPrice = minPrice * 0.45; break;
+                case 'rare': calculatedPrice = minPrice * 0.85; break;
+            }
+
+            // Відправка даних у Telegram бот
+            tg.sendData(JSON.stringify({
+                minPrice: minPrice,
+                condition: condition,
+                finalPrice: Math.round(calculatedPrice)
+            }));
+        }
+    </script>
+</body>
+</html>
