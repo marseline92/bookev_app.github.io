@@ -8,7 +8,7 @@ bot = telebot.TeleBot(TOKEN)
 def start(message):
     # Кнопка для відкриття WebApp
     markup = telebot.types.ReplyKeyboardMarkup(resize_keyboard=True)
-    webAppTest = telebot.types.WebAppInfo("https://yourdomain.com/webapp/index.html")
+    webAppTest = telebot.types.WebAppInfo("https://github.com/marseline92/bookev_app.github.io.git")
     markup.add(telebot.types.KeyboardButton("Відкрити калькулятор", web_app=webAppTest))
     bot.send_message(message.chat.id, "Привіт! Натисни кнопку, щоб оцінити книгу:", reply_markup=markup)
 
