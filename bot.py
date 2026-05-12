@@ -1,7 +1,7 @@
 import telebot
 import json
 
-TOKEN = "8719859916:AAENyecDfsv0SJ5NlWxKQcZaHdGBCTHoULo"
+TOKEN = "     "
 bot = telebot.TeleBot(TOKEN)
 
 @bot.message_handler(commands=['start'])
